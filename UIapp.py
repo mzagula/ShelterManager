@@ -7,12 +7,10 @@ from kivy.uix.label import Label
 import pandas as pd
 from sqlalchemy import create_engine, MetaData, Table, insert, select
 from sqlalchemy.orm import sessionmaker
-import smtplib
-s = smtplib.SMTP(host='smtp.gmail.com', port=465)
-s.starttls()
-s.login("marta.testowe123@gmail.com", "AlaMaKota123")
+from Email import Email
+from DBConnection import DBConnection
 
-
+mail = Email()
 animal_list = []
 
 def df_from_df_to_list(df):
@@ -23,21 +21,15 @@ def df_from_df_to_list(df):
     return list_df
 
 #read db state
-engine = create_engine('postgresql://admin:admin@localhost:5432/ManagerApp')
-connection = engine.connect()
-metadata = MetaData()
-animals = Table('animals', metadata, autoload=True, autoload_with=engine)
-query = select([animals])
+connection = DBConnection()
+animals_data = connection.select("animals","")
 
-ResultProxy = connection.execute(query)
-ResultSet = ResultProxy.fetchall()
-
-df = pd.DataFrame(ResultSet)
+df = pd.DataFrame(animals_data)
 if not df.empty:
-    df.columns = ResultSet[0].keys()
+    df.columns = animals_data[0].keys()
     animal_list=df_from_df_to_list(df['animal_name'])
 
-maxPlaces = 3
+maxPlaces = 7
 
 class ManagerApp(App):
 
