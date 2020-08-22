@@ -1,11 +1,9 @@
-from Email import Email
-import pandas as pd
+from UIApp import ManagerApp
+from kivy.app import App
 
-mail = Email()
+ManagerApp().run()
 
-mail.receiver="mzagula1992@gmail.com"
-mail.subject="Eloeloelo"
-mail.sender="marta.testowe123@gmail.com"
-mail.message="testtest"
-
-mail.send_mail()
+# a=ManagerApp()
+# a.a="a"
+#
+# print(a.a)

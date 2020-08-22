@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 
 class DBConnection:
-    name=""
+    name = ""
 
     def __init__(self):
         self.engine = create_engine('postgresql://admin:admin@localhost:5432/ManagerApp')
@@ -26,6 +26,15 @@ class DBConnection:
         query = table.delete()
         self.connection.execute(query)
 
+    def insert(self, insert_list, column):
+        metadata = MetaData(bind=self.engine)
+        table = Table(self.name, metadata, autoload=True)
+        Session = sessionmaker(bind=self.connection)
+        session = Session()
+        for values in insert_list:
+            i = insert(table).values({column: values})
+            session.execute(i)
 
+        session.commit()
 
     # animals = Table('animals', metadata, autoload=True, autoload_with=engine)
