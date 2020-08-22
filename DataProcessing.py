@@ -1,4 +1,4 @@
-
+import pandas as pd
 
 class DataProcessing():
 
@@ -8,6 +8,16 @@ class DataProcessing():
             print(j)
             list_df.append(j)
         return list_df
+
+    def df_table_to_list(animals_data,animal_name):
+        df = pd.DataFrame(animals_data)
+        if not df.empty:
+            df.columns = animals_data[0].keys()
+            animal_list = DataProcessing.df_from_df_to_list(df[animal_name])
+        else:
+            animal_list=[]
+
+        return animal_list
 
     def df_from_list_to_column(list_to_col):
         vertical_data = []

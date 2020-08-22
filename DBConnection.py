@@ -26,14 +26,13 @@ class DBConnection:
         query = table.delete()
         self.connection.execute(query)
 
-    def insert(self, insert_list, column):
+    def insert(self, insert_value, column):
         metadata = MetaData(bind=self.engine)
         table = Table(self.name, metadata, autoload=True)
         Session = sessionmaker(bind=self.connection)
         session = Session()
-        for values in insert_list:
-            i = insert(table).values({column: values})
-            session.execute(i)
+        i = insert(table).values({column: insert_value})
+        session.execute(i)
 
         session.commit()
 
