@@ -37,4 +37,3 @@ class DBConnection:
 
         session.commit()
 
-    # animals = Table('animals', metadata, autoload=True, autoload_with=engine)

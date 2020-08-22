@@ -1,6 +1,6 @@
 from DBConnection import DBConnection
 from Email import Email
-#from mainManager import animal_list, maxPlaces, new_animal_list
+# from mainManager import animal_list, maxPlaces, new_animal_list
 from kivy.app import App
 from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
@@ -13,7 +13,7 @@ class UIApp(App):
     animal_list = []
     maxPlaces = 7
 
-    def __init__(self,nal,al,mp):
+    def __init__(self, nal, al, mp):
         App.__init__(self)
         self.new_animal_list = nal
         self.animal_list = al
@@ -24,12 +24,13 @@ class UIApp(App):
         self.box = BoxLayout(orientation='horizontal', spacing=20)
         self.txt = TextInput(hint_text='Write here', size_hint=(.5, .1), pos_hint={'x': .65, 'y': .2})
 
-        self.shelter_list = Label(text="Existing places: " + str(self.animal_list.append(self.new_animal_list)), size_hint=(.1, .15),
+        self.shelter_list = Label(text="Existing places: " + str(self.animal_list.append(self.new_animal_list)),
+                                  size_hint=(.1, .15),
                                   pos_hint={'x': .5, 'y': .9})
         self.message = Label(text="You can add", size_hint=(.1, .15), pos_hint={'x': .5, 'y': .9})
         self.btnAdd = Button(text='Add to list', on_press=self.add, size_hint=(.1, .1), pos_hint={'x': .65, 'y': .2})
-        self.btnDelete = Button(text='Delete from list', on_press=self.delete, size_hint=(.1, .1),
-                                pos_hint={'x': .65, 'y': .2})
+        self.btnDelete = Button(text='Delete from list', on_press=self.delete, size_hint=(.1, .1), pos_hint={'x': .65,
+                                                                                                             'y': .2})
         self.btnDeleteFromDb = Button(text='Clear database', on_press=self.clearDB, size_hint=(.1, .1),
                                       pos_hint={'x': .65, 'y': .2})
         self.wrapper.add_widget(self.shelter_list)
