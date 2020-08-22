@@ -1,11 +1,19 @@
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
+from DBConnection import DBConnection
+import pandas as pd
+
+connection = DBConnection()
+email_users = connection.select("email_users","")
+
+df = pd.DataFrame(email_users)
+print("aaa "+str(df[1][0]))
 
 s = smtplib.SMTP(host='smtp.gmail.com', port=587)
 
 s.starttls()
-s.login("marta.testowe123@gmail.com", "AlaMaKota123")
+s.login(df[0][0], df[1][0])
 sender_email = "marta.testowe123@gmail.com"
 receiver_email = "mzagula1992@gmail.com"
 

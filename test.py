@@ -2,7 +2,8 @@ from DBConnection import DBConnection
 import pandas as pd
 
 connection = DBConnection()
-animals = connection.select("animals","")
+email_users = connection.select("email_users","")
 
-df = pd.DataFrame(animals)
-print(animals[0].keys())
+df = pd.DataFrame(email_users)
+print("aaa "+str(df[1][0]))
+

@@ -3,6 +3,8 @@ from sqlalchemy.orm import sessionmaker
 
 
 class DBConnection:
+    name=""
+
     def __init__(self):
         self.engine = create_engine('postgresql://admin:admin@localhost:5432/ManagerApp')
         self.connection = self.engine.connect()
@@ -19,7 +21,10 @@ class DBConnection:
 
         return ResultSet
 
-
+    def delete(self):
+        table = Table(self.name, self.metadata, autoload=True, autoload_with=self.engine)
+        query = table.delete()
+        self.connection.execute(query)
 
 
 
