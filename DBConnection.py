@@ -10,8 +10,6 @@ class DBConnection:
         self.connection = self.engine.connect()
         self.metadata = MetaData()
 
-    # arguments: String table, String where
-    # return: df
     def select(self, table, where):
         table = Table(table, self.metadata, autoload=True, autoload_with=self.engine)
         query = select([table])
@@ -36,3 +34,9 @@ class DBConnection:
 
         session.commit()
 
+    def delete_from(self, where_value):
+        table = Table(self.name, self.metadata, autoload=True, autoload_with=self.engine)
+        d = table.delete().where(table.c.animal_name == where_value)
+        self.connection.execute(d)
+        # query = table.filter_by(animal_name=where_value).delete()
+        # self.connection.execute(query)

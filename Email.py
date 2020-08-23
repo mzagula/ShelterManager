@@ -6,11 +6,10 @@ import pandas as pd
 
 
 class Email:
-
-    message=""
-    receiver=""
-    sender=""
-    subject=""
+    message = ""
+    receiver = ""
+    sender = ""
+    subject = ""
 
     def __init__(self):
         self.server = smtplib.SMTP(host='smtp.gmail.com', port=587)
@@ -18,11 +17,11 @@ class Email:
 
     def send_mail(self):
         connection = DBConnection()
-        email_users = connection.select("email_users","")
+        email_users = connection.select("email_users", "")
         df = pd.DataFrame(email_users)
         self.server.login(df[0][0], df[1][0])
-        receiver_mail=self.receiver
-        sender_mail=df[0][0]
+        receiver_mail = self.receiver
+        sender_mail = df[0][0]
 
         message = MIMEMultipart("alternative")
         message["Subject"] = self.subject
@@ -33,7 +32,6 @@ class Email:
         body = MIMEText(text, "plain")
         message.attach(body)
         self.server.sendmail(sender_mail, receiver_mail, message.as_string())
-
 
     # def send_to_manager(self):
     #     connection = DBConnection()

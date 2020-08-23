@@ -6,8 +6,6 @@ from kivy.uix.button import Button
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
-import pandas as pd
-
 
 class UIApp(App):
     animal_list = []
@@ -72,12 +70,17 @@ class UIApp(App):
             self.message.text = "Shelter is full"
 
     def delete(self, event):
-        connection = DBConnection()
-        animals_data = connection.select("animals", "")
+        animals = DBConnection()
+        animals.name = "animals"
+        animals_data = animals.select("animals", "")
         self.animal_list = DataProcessing.df_table_to_list(animals_data,"animal_name")
 
         if len(self.animal_list) > 0 and self.txt.text in self.animal_list:
-            self.animal_list.remove(self.txt.text)
+            animals.delete_from(self.txt.text)
+            # animals.where(animal_name=self.txt.text).delete()
+
+            animals_data = animals.select("animals", "")
+            self.animal_list = DataProcessing.df_table_to_list(animals_data,"animal_name")
             self.shelter_list.text = "Existing places: " + str(self.animal_list)
         else:
             self.message.text = "Cannot find the animal to remove"
